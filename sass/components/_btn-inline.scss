@@ -1,0 +1,52 @@
+////////////////////////////
+// BUTTON INLINE
+
+.btn-inline {
+  border: none;
+  color: var(--color-primary);
+
+  /*
+    To more easily use it across different places, we can specify the font-size
+    of any button instance's parent element and the button will inherit it.
+  */
+  font-size: inherit;
+
+  /*
+    works with the parent's color and changes on hover
+  */
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  display: inline-block;
+
+  /*
+    again, for reusability
+  */
+  background-color: transparent;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  /*
+    for the arrow symbol
+  */
+  & span {
+    margin-left: 3px;
+
+    transition: margin-left 0.2s;
+  }
+
+  &:hover {
+    color: var(--color-grey-dark-1);
+
+    span {
+      margin-left: 8px;
+    }
+  }
+
+  &:focus {
+    outline: none;
+
+    animation: pulsate 1s infinite;
+  }
+}

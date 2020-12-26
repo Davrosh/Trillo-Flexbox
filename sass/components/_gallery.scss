@@ -1,0 +1,25 @@
+////////////////////////////
+// GALLERY
+
+.gallery {
+  /*
+    to position the images side by side
+  */
+  display: flex;
+
+  /*
+    In responsive design we must always specify a height and width for images in
+    percentages so that the image stays fluid
+  */
+  &__photo {
+    /*
+      100% of its containing element - the figure element
+    */
+    width: 100%;
+    /*
+      Avoid leaving some small space below an image when it is displayed as an
+      inline element
+    */
+    display: block;
+  }
+}

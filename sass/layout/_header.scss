@@ -1,0 +1,50 @@
+.header {
+    font-size: 1.4rem;
+
+    height: 7rem;
+    background-color: #fff;
+    border-bottom: var(--line);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /*
+    wrap last items in row to next line (will work for search bar)
+    between every such line space around
+    */
+    @media only screen and (max-width: $bp-smallest) {
+        flex-wrap: wrap;
+        align-content: space-around;
+        height: 11rem;
+    }
+
+    ////////////////////////////
+    // LOGO
+    .logo {
+        height: 3.25rem;
+        margin-left: 2rem;
+    }
+
+    ////////////////////////////
+    // SEARCH
+
+    .search {
+        flex: 0 0 40%;
+
+        /*
+            we would to have the search bar under the other items on the smallest
+            screens
+            for that, we will set the order to 1 which is more than the others' default
+            0 and so it will be the last item of the its row and using flex-basis 100%
+            we will take up the width of a whole row.
+            the last thing we need to achieve this effect is to set the row to flex-wrap
+            so that the last item (search bar) can wrap to the next line    
+        */
+        @media only screen and (max-width: $bp-smallest) {
+            order: 1;
+            flex: 0 0 100%;
+        }
+    }
+}
+

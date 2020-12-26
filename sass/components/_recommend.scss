@@ -1,0 +1,44 @@
+////////////////////////////
+// RECOMMEND
+
+.recommend {
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+
+  display: flex;
+  align-items: center;
+
+  &__count {
+    /*
+      to push the photos to the right
+    */
+    margin-right: auto;
+  }
+
+  &__friends {
+    /*
+      easy fix that makes sure that the four photos stay on one line
+    */
+    display: flex;
+  }
+
+
+  &__photo {
+    /*
+      This overrides our usual border-box. Now we don't include the border into
+      the height and width of the element. It now instead adds onto it.
+    */
+    box-sizing: content-box;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+
+    /*
+      Create overlapping effect
+    */
+    &:not(:last-child) {
+      margin-right: -2rem;
+    }
+  }
+}

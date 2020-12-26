@@ -1,0 +1,16 @@
+.content {
+  display: flex;
+
+  /*
+    to buy us more space to occupy with text, we will put the side-nav on top of
+    the main content
+  */
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
+  }
+
+  // Fix visible red bottom on mid-sized screens
+  @media only screen and (max-width: $bp-large) {
+    flex: 1;
+  }
+}

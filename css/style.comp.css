@@ -1,0 +1,842 @@
+:root {
+  --color-primary: #eb2f64;
+  --color-primary-light: #ff3366;
+  --color-primary-dark: #ba265d;
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+  /*   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  not displays in certain parts of chrome
+ */
+  --shadow-dark: 0 2rem 6rem #00000030;
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+  --line: 1px solid var(--color-grey-light-2); }
+
+/*
+  we will set breakpoints at widths wherein our design starts to break - the
+  perfect strategy
+
+  media queries cannot use css variables in their conditions, so, we will use
+  sass variables
+*/
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media only screen and (max-width: 68.75em) {
+    html {
+      font-size: 50%; } }
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-grey-dark-2);
+  background-image: linear-gradient(to right bottom, var(--color-primary-light), var(--color-primary-dark));
+  background-size: cover;
+  background-repeat: no-repeat;
+  /*   But if the height can be bigger than that then it will simply be bigger
+       You may want to use min-height a lot in order to ensure that elements
+       stay above the mobile-best-look threshold, but can scale up as the
+       viewport becomes larger. 
+       Just putting height here seems fine at first, but scale the browser
+       window up and if the content doesn't fit the viewport it overflows from
+       it - in this case, we see that the background persists until the end of
+       the viewport and not after scrolling down.
+ */
+  min-height: 100vh; }
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    box-shadow: none; }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25); }
+  100% {
+    transform: scale(1);
+    box-shadow: none; } }
+
+/*
+  not last child of its container but it is the last .paragraph
+*/
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem; }
+
+.container {
+  /*
+        1200px if we have enough space otherwise we occupy 100% of the width
+    */
+  max-width: 120rem;
+  margin: 8rem auto;
+  background-color: var(--color-grey-light-1);
+  box-shadow: var(--shadow-dark);
+  min-height: 50rem;
+  /*
+    when the the auto margin one either side runs out, we remove the visible
+    margin on the top and bottom
+  */ }
+  @media only screen and (max-width: 75em) {
+    .container {
+      margin: 0;
+      /*
+      when we decrease the viewport the font-size changes in one of our
+      breakpoints and this could result in another margin showing up
+      so we could write these two rules down, just to be 100% sure :)
+    */
+      max-width: 100%;
+      width: 100%; } }
+  @media only screen and (max-width: 68.75em) {
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column; } }
+
+.content {
+  display: flex;
+  /*
+    to buy us more space to occupy with text, we will put the side-nav on top of
+    the main content
+  */ }
+  @media only screen and (max-width: 56.25em) {
+    .content {
+      flex-direction: column; } }
+  @media only screen and (max-width: 68.75em) {
+    .content {
+      flex: 1; } }
+
+.header {
+  font-size: 1.4rem;
+  height: 7rem;
+  background-color: #fff;
+  border-bottom: var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /*
+    wrap last items in row to next line (will work for search bar)
+    between every such line space around
+    */ }
+  @media only screen and (max-width: 31.25em) {
+    .header {
+      flex-wrap: wrap;
+      align-content: space-around;
+      height: 11rem; } }
+  .header .logo {
+    height: 3.25rem;
+    margin-left: 2rem; }
+  .header .search {
+    flex: 0 0 40%;
+    /*
+            we would to have the search bar under the other items on the smallest
+            screens
+            for that, we will set the order to 1 which is more than the others' default
+            0 and so it will be the last item of the its row and using flex-basis 100%
+            we will take up the width of a whole row.
+            the last thing we need to achieve this effect is to set the row to flex-wrap
+            so that the last item (search bar) can wrap to the next line    
+        */ }
+    @media only screen and (max-width: 31.25em) {
+      .header .search {
+        order: 1;
+        flex: 0 0 100%; } }
+
+.sidebar {
+  background-color: var(--color-grey-dark-1);
+  flex: 0 0 18%;
+  /*
+        This pushes the legal text to the bottom since there are only two items
+        in the container, the nav bar and the legal text, and the available
+        space is divided evenly amongst them.
+    */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  @media only screen and (max-width: 56.25em) {
+    .sidebar {
+      flex: 0 0 auto; } }
+  .sidebar .side-nav {
+    margin-top: 3.5rem; }
+    @media only screen and (max-width: 56.25em) {
+      .sidebar .side-nav {
+        margin: 0; } }
+
+.btn-inline {
+  border: none;
+  color: var(--color-primary);
+  /*
+    To more easily use it across different places, we can specify the font-size
+    of any button instance's parent element and the button will inherit it.
+  */
+  font-size: inherit;
+  /*
+    works with the parent's color and changes on hover
+  */
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  display: inline-block;
+  /*
+    again, for reusability
+  */
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  /*
+    for the arrow symbol
+  */ }
+  .btn-inline span {
+    margin-left: 3px;
+    transition: margin-left 0.2s; }
+  .btn-inline:hover {
+    color: var(--color-grey-dark-1); }
+    .btn-inline:hover span {
+      margin-left: 8px; }
+  .btn-inline:focus {
+    outline: none;
+    animation: pulsate 1s infinite; }
+
+.cta {
+  padding: 3.5rem 0;
+  /*
+    for both h2 and button
+  */
+  text-align: center; }
+  @media only screen and (max-width: 56.25em) {
+    .cta {
+      padding: 2.5rem 0; } }
+  .cta__book-now {
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem; }
+
+.gallery {
+  /*
+    to position the images side by side
+  */
+  display: flex;
+  /*
+    In responsive design we must always specify a height and width for images in
+    percentages so that the image stays fluid
+  */ }
+  .gallery__photo {
+    /*
+      100% of its containing element - the figure element
+    */
+    width: 100%;
+    /*
+      Avoid leaving some small space below an image when it is displayed as an
+      inline element
+    */
+    display: block; }
+
+.legal {
+  font-size: 1.2rem;
+  color: var(--color-grey-light-4);
+  text-align: center;
+  padding: 2.5rem;
+  /*
+    not display the legal text on smaller screens
+  */ }
+  @media only screen and (max-width: 56.25em) {
+    .legal {
+      display: none; } }
+
+.list {
+  list-style: none;
+  padding: 3rem;
+  border-top: var(--line);
+  border-bottom: var(--line);
+  /*
+    This will give us two cols side by side
+  */
+  display: flex;
+  flex-wrap: wrap;
+  /*
+    To put an svg image next to a list item
+  */ }
+  .list__item {
+    flex: 0 0 50%;
+    margin-bottom: 0.7rem; }
+  .list__item::before {
+    content: "";
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-right: 7px;
+    /*
+      older browsers - doesn't support svg colors
+
+
+    */
+    background-image: url("../../img/chevron-thin-right.svg");
+    background-size: cover;
+    /*
+      Newer browsers - masks
+    */ }
+    @supports (-webkit-mask-image: url()) or (mask-image: url()) {
+      .list__item::before {
+        background-color: var(--color-primary);
+        -webkit-mask-image: url("../../img/chevron-thin-right.svg");
+        /*
+        protects the image from being cropped and instead resizes it to make it
+        cover 
+      */
+        -webkit-mask-size: cover;
+        mask-image: url("../../img/chevron-thin-right.svg");
+        mask-size: cover;
+        /*
+        remove the colorless background-image from above our mask-image
+      */
+        background-image: none; } }
+
+.overview {
+  display: flex;
+  align-items: center;
+  border-bottom: var(--line); }
+  .overview__heading {
+    font-size: 2.25rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1.5rem 3rem; }
+    @media only screen and (max-width: 37.5em) {
+      .overview__heading {
+        font-size: 1.8rem;
+        /*
+        the padding is what defines the height of this overview element
+      */
+        padding: 1.25rem 2rem; } }
+  .overview__stars {
+    /*     flex: 1;
+      stretching makes it occupy all the available space it can but its containing
+      box is now too big
+    */
+    /*
+      flexbox trick - it is only occupying the space it needs
+      margin-left: auto on &__location would also work
+    */
+    margin-right: auto;
+    /*
+      The svg stars act as inline elements and there is a small unoccupied space
+      beneath them, this overrides this
+    */
+    display: flex; }
+  .overview__icon-star, .overview__icon-location {
+    width: 1.75rem;
+    height: 1.75rem;
+    fill: var(--color-primary); }
+  .overview__location {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center; }
+  .overview__icon-location {
+    margin-right: 0.5rem; }
+  .overview__rating {
+    background-color: var(--color-primary);
+    color: #fff;
+    margin-left: 3rem;
+    padding: 0 2.25rem;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    @media only screen and (max-width: 37.5em) {
+      .overview__rating {
+        padding: 0 1.5rem; } }
+  .overview__rating-average {
+    font-size: 2.25rem;
+    font-weight: 300;
+    margin-bottom: -3px; }
+    @media only screen and (max-width: 37.5em) {
+      .overview__rating-average {
+        font-size: 1.8rem; } }
+  .overview__rating-count {
+    font-size: 0.8rem;
+    text-transform: uppercase; }
+    @media only screen and (max-width: 37.5em) {
+      .overview__rating-count {
+        font-size: .5rem; } }
+
+.recommend {
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+  display: flex;
+  align-items: center; }
+  .recommend__count {
+    /*
+      to push the photos to the right
+    */
+    margin-right: auto; }
+  .recommend__friends {
+    /*
+      easy fix that makes sure that the four photos stay on one line
+    */
+    display: flex; }
+  .recommend__photo {
+    /*
+      This overrides our usual border-box. Now we don't include the border into
+      the height and width of the element. It now instead adds onto it.
+    */
+    box-sizing: content-box;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    /*
+      Create overlapping effect
+    */ }
+    .recommend__photo:not(:last-child) {
+      margin-right: -2rem; }
+
+.review {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 3rem;
+  position: relative;
+  /*
+    This will crop the part of the quotes that overflows its container 
+  */
+  overflow: hidden;
+  /*
+    Quotation mark effect
+  */ }
+  @media only screen and (max-width: 56.25em) {
+    .review {
+      padding: 2rem; } }
+  .review__text {
+    margin-bottom: 2rem;
+    /*
+      Make it appear above the quotes effect
+    */
+    z-index: 10;
+    position: relative; }
+  .review__user {
+    display: flex;
+    align-items: center; }
+  .review__photo {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    margin-right: 1.5rem; }
+  .review__user-box {
+    margin-right: auto; }
+  .review__user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem; }
+  .review__user-date {
+    font-size: 1rem;
+    color: var(--color-grey-dark-3); }
+  .review__user-rating {
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    font-weight: 300; }
+  .review::before {
+    /*
+      In css, we have to use ISO Num notations for symbols, just look up the
+      ones you want.
+    */
+    content: "\201C";
+    position: absolute;
+    top: -2.75rem;
+    left: -1rem;
+    /*
+      it was too large initially
+    */
+    line-height: 1;
+    font-size: 20rem;
+    color: var(--color-grey-light-2);
+    font-family: sans-serif;
+    /*
+      smaller than the text's
+    */
+    z-index: 1; }
+
+.search {
+  /*
+          an example of a nested flexbox
+          we can use flexbox to easily center/align items on the page
+      */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*  
+      make it so the search appears to span across the line with a background
+      color
+    */
+  /*
+          adjacent sibling elements, not child
+      */
+  /*     &__input:focus + &__button {
+          background-color: var(--color-grey-light-3);
+      } */ }
+  @media only screen and (max-width: 31.25em) {
+    .search {
+      background-color: var(--color-grey-light-2); } }
+  .search__input {
+    /*
+              input doesn't inherit these by default
+          */
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: var(--color-grey-light-2);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 100px;
+    /*
+              of the container's width - the 40% above
+          */
+    width: 90%;
+    transition: all 0.2s;
+    /*
+             move the input to the right to make the button appear to be on top of
+             the search bar
+          */
+    margin-right: -3.25rem;
+    /*
+              Chrome and Safari browsers
+          */ }
+    .search__input:focus {
+      outline: none;
+      width: 100%;
+      background-color: var(--color-grey-light-3); }
+    .search__input::-webkit-input-placeholder {
+      /*
+                  The font size in inherited thanks to the inherit we specified
+                  from the header - 1.4rem;
+              */
+      font-weight: 100;
+      color: var(--color-grey-light-4); }
+  .search__button {
+    border: none;
+    background-color: transparent; }
+    .search__button:focus {
+      outline: none; }
+    .search__button:active {
+      transform: translateY(2px); }
+  .search__icon {
+    /*
+              Compared to font icons, we can resize and color svg icons by
+              specifying rules for their height and width.
+          */
+    height: 2rem;
+    width: 2rem;
+    fill: var(--color-grey-dark-3); }
+
+.side-nav {
+  font-size: 1.4rem;
+  list-style: none;
+  /*
+    position the navigation items side by side in one row on smaller screens
+  */
+  /*
+    for the animation
+    remember to always put regular ::before before
+    :hover::before/:active::before
+  */
+  /*
+    The active li should always be red and it's using a before element for that
+  */
+  /*     &__link:hover {
+      color: orangered;
+    } */ }
+  @media only screen and (max-width: 56.25em) {
+    .side-nav {
+      display: flex; } }
+  .side-nav__item {
+    position: relative;
+    /*
+      each item grows to its available width
+    */ }
+    .side-nav__item:not(:last-child) {
+      margin-bottom: 0.5rem; }
+      @media only screen and (max-width: 56.25em) {
+        .side-nav__item:not(:last-child) {
+          margin: 0; } }
+    @media only screen and (max-width: 56.25em) {
+      .side-nav__item {
+        flex: 1; } }
+  .side-nav__item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--color-primary);
+    transform: scaleY(0);
+    /*     transform-origin: bottom;
+      default is center
+  */
+    /*
+      two animations one after the other (achieved using delay for the second
+      which is the same as the animation time for the first)
+      cubic-bezier(1, 0, 0, 1) - start fast, finish slowly
+      background-color change on click
+    */
+    transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s, background-color 0.1s; }
+  .side-nav__item:hover::before, .side-nav__item--active::before {
+    transform: scaleY(1);
+    width: 100%; }
+  .side-nav__item:active::before {
+    background-color: var(--color-primary-light); }
+  .side-nav__link:link, .side-nav__link:visited {
+    color: var(--color-grey-light-1);
+    text-decoration: none;
+    text-transform: uppercase;
+    /*
+      Notice we have display block and then display flex later on - 
+      this acts as a failsafe for older browsers
+    */
+    display: block;
+    padding: 1.5rem 3rem;
+    /*
+      z-index only works for explicit position
+    */
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    /*
+      center links inside their boxes
+    */
+    /*
+      icon above nav link on smaller screens
+    */ }
+    @media only screen and (max-width: 56.25em) {
+      .side-nav__link:link, .side-nav__link:visited {
+        justify-content: center;
+        padding: 2rem; } }
+    @media only screen and (max-width: 37.5em) {
+      .side-nav__link:link, .side-nav__link:visited {
+        flex-direction: column;
+        padding: 1.5rem .5rem; } }
+  .side-nav__icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 2rem;
+    /*
+          The color of the current element or the parent element
+          putting color: blue turns this also blue
+          also works with hover
+        */
+    fill: currentColor; }
+    @media only screen and (max-width: 37.5em) {
+      .side-nav__icon {
+        margin-right: 0;
+        margin-bottom: .7rem;
+        width: 1.5rem;
+        height: 1.5rem; } }
+
+.user-nav {
+  /*
+      This will make the navbar with the three boxes stretch across the header
+      from top to bottom.
+    */
+  align-self: stretch;
+  display: flex;
+  /*   align-items: center;
+   */
+  align-items: stretch;
+  /*
+      Direct elements - the icon-boxes and the user
+      being a flex item overrides span being an inline element so we can set
+      its height and width.
+    */
+  /*   &__user {
+    } */
+  /*   &__user-name {
+    } */ }
+  .user-nav > * {
+    padding: 0 2rem;
+    cursor: pointer;
+    /*     height: 100%;
+      we can use align-items: stretch in the container instead
+   */
+    /*
+          Lets us center the children vertically.
+      */
+    display: flex;
+    align-items: center; }
+  .user-nav > *:hover {
+    background-color: var(--color-grey-light-2); }
+  .user-nav__icon-box {
+    position: relative; }
+  .user-nav__icon {
+    height: 2.25rem;
+    width: 2.25rem;
+    fill: var(--color-grey-dark-2); }
+  .user-nav__notification {
+    font-size: 0.8rem;
+    height: 1.75rem;
+    width: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #fff;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.1rem;
+    /*
+          center the text inside the circle
+      */
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .user-nav__user-photo {
+    height: 3.75rem;
+    border-radius: 50%;
+    margin-right: 1rem; }
+
+.btn {
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-radius: 100px;
+  border: none;
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
+  color: #fff;
+  position: relative;
+  /*
+    this is the secret - it is above it but hidden
+  */
+  overflow: hidden;
+  cursor: pointer; }
+  .btn > * {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s; }
+  .btn__visible {
+    padding: 2rem 7.5rem; }
+  .btn__invisible {
+    position: absolute;
+    /*
+      not as much top-bottom padding so that the text doesn't overflow 
+    */
+    padding: 2rem 0;
+    left: 0;
+    /*
+      Directly above it
+    */
+    top: -100%; }
+  .btn:hover {
+    background-image: linear-gradient(to left, var(--color-primary-light), var(--color-primary-dark)); }
+  .btn:hover .btn__visible {
+    transform: translateY(100%); }
+  .btn:hover .btn__invisible {
+    top: 0; }
+  .btn:focus {
+    outline: none;
+    animation: pulsate 1s infinite; }
+
+.hotel-view {
+  background-color: #fff;
+  /*   height: 80rem;
+ */
+  /*
+        Should grow as much as it can
+    */
+  flex: 1; }
+  @media only screen and (max-width: 68.75em) {
+    .hotel-view {
+      display: flex;
+      flex-direction: column; } }
+  @media only screen and (max-width: 68.75em) {
+    .hotel-view .cta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; } }
+
+.detail {
+  /*
+    all the elements inside its children, the .description and .user-reviews,
+    are going to inherit it.
+  */
+  font-size: 1.4rem;
+  display: flex;
+  padding: 4.5rem;
+  background-color: var(--color-grey-light-1);
+  border-bottom: var(--line);
+  /*
+    now on smaller screens the description is on top of the reviews
+  */ }
+  @media only screen and (max-width: 56.25em) {
+    .detail {
+      padding: 3rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .detail {
+      flex-direction: column; } }
+
+.description {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 3rem;
+  flex: 0 0 60%;
+  /*
+    as much as the padding
+  */
+  margin-right: 4.5rem; }
+  @media only screen and (max-width: 56.25em) {
+    .description {
+      padding: 2rem;
+      margin-right: 3rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .description {
+      margin-right: 0;
+      margin-bottom: 3rem; } }
+  .description .list {
+    margin: 3rem 0; }
+
+.user-reviews {
+  flex: 1;
+  /* text-align: center;
+    we would like to position the 'Show all' text in the center, but the above
+    also centers the text in the two review boxes which is not what we want.
+   */
+  display: flex;
+  flex-direction: column;
+  /*
+    stops the button from automatically stretching across the cross axis 
+   */
+  align-items: center; }
+  .user-reviews .review {
+    margin-bottom: 3.5rem; }
+    @media only screen and (max-width: 56.25em) {
+      .user-reviews .review {
+        margin-bottom: 3rem; } }
+
+/*
+COLORS
+
+Primary: #eb2f64
+Primary light: #FF3366
+Primary dark: #BA265D
+
+Grey light 1: #faf9f9
+Grey light 2: #f4f2f2
+Grey light 3: #f0eeee
+Grey light 4: #ccc
+
+Grey dark 1: #333
+Grey dark 2: #777
+Grey dark 3: #999
+
+*/

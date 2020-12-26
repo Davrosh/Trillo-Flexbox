@@ -1,0 +1,111 @@
+.hotel-view {
+  background-color: #fff;
+
+
+  /*   height: 80rem;
+ */
+  /*
+        Should grow as much as it can
+    */
+  flex: 1;
+
+  // Fix visible red bottom on mid-sized screens
+  @media only screen and (max-width: $bp-large) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Fix visible red bottom on mid-sized screens
+  .cta {
+    @media only screen and (max-width: $bp-large) {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.detail {
+
+  /*
+    all the elements inside its children, the .description and .user-reviews,
+    are going to inherit it.
+  */
+  font-size: 1.4rem;
+
+  display: flex;
+  padding: 4.5rem;
+
+  background-color: var(--color-grey-light-1);
+
+  border-bottom: var(--line);
+
+  @media only screen and (max-width: $bp-medium) {
+    padding: 3rem;
+  }
+
+  /*
+    now on smaller screens the description is on top of the reviews
+  */
+  @media only screen and (max-width: $bp-small) {
+    flex-direction: column;
+  }
+}
+
+.description {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 3rem;
+  flex: 0 0 60%;
+
+  /*
+    as much as the padding
+  */
+  margin-right: 4.5rem;
+
+  @media only screen and (max-width: $bp-medium) {
+    padding: 2rem;
+    margin-right: 3rem;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    margin-right: 0;
+    margin-bottom: 3rem;
+  }
+
+  ////////////////////////////
+  // LIST
+
+  .list {
+    margin: 3rem 0;
+
+  }
+}
+
+.user-reviews {
+  flex: 1;
+
+  /* text-align: center;
+    we would like to position the 'Show all' text in the center, but the above
+    also centers the text in the two review boxes which is not what we want.
+   */
+
+   display: flex;
+   flex-direction: column;
+   /*
+    stops the button from automatically stretching across the cross axis 
+   */
+   align-items: center;
+
+  ////////////////////////////
+  // REVIEWS
+
+  .review {   
+    margin-bottom: 3.5rem;
+    @media only screen and (max-width: $bp-medium) {
+      margin-bottom: 3rem;
+    }
+  }
+}

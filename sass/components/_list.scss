@@ -1,0 +1,63 @@
+////////////////////////////
+// LIST
+
+.list {
+  list-style: none;
+  padding: 3rem;
+  border-top: var(--line);
+  border-bottom: var(--line);
+
+  /*
+    This will give us two cols side by side
+  */
+  display: flex;
+  flex-wrap: wrap;
+  &__item {
+    flex: 0 0 50%;
+
+    margin-bottom: 0.7rem;
+  }
+
+  /*
+    To put an svg image next to a list item
+  */
+  &__item::before {
+    content: "";
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-right: 7px;
+
+    /*
+      older browsers - doesn't support svg colors
+
+
+    */
+
+    background-image: url("../../img/chevron-thin-right.svg");
+    background-size: cover;
+
+    /*
+      Newer browsers - masks
+    */
+
+    @supports ((-webkit-mask-image: url()) or (mask-image: url())) {
+      background-color: var(--color-primary);
+      -webkit-mask-image: url("../../img/chevron-thin-right.svg");
+      /*
+        protects the image from being cropped and instead resizes it to make it
+        cover 
+      */
+      -webkit-mask-size: cover;
+      mask-image: url("../../img/chevron-thin-right.svg");
+      mask-size: cover;
+
+      /*
+        remove the colorless background-image from above our mask-image
+      */
+      background-image: none;
+    }
+
+
+  }
+}

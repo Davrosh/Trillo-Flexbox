@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+// 1. Configuration and helpers
+@import
+  'abstracts/variables';
+//   'abstracts/functions',
+//   'abstracts/mixins';
+
+// // 2. Vendors
+// @import
+//   'vendors/normalize';
+
+// 3. Base stuff
+@import
+  'base/base',
+  'base/animations',
+//   'base/fonts',
+  'base/typography';
+//   'base/helpers';
+
+// 4. Layout-related sections
+@import
+    'layout/container',
+    'layout/content',
+    'layout/header',
+    'layout/sidebar';
+//   'layout/header',
+//   'layout/footer';
+
+// 5. Components
+@import
+    'components/btn-inline',
+    'components/cta',
+    'components/gallery',
+    'components/legal',
+    'components/list',
+    'components/overview',
+    'components/recommend',
+    'components/review',
+    'components/search',
+    'components/side-nav',
+    'components/user-nav',
+    'components/btn';
+
+// 6. Page-specific styles
+@import
+  'pages/hotel-view';
+
+// // 7. Themes
+// @import
+//   'themes/default';
+
+
+
+  /*
+COLORS
+
+Primary: #eb2f64
+Primary light: #FF3366
+Primary dark: #BA265D
+
+Grey light 1: #faf9f9
+Grey light 2: #f4f2f2
+Grey light 3: #f0eeee
+Grey light 4: #ccc
+
+Grey dark 1: #333
+Grey dark 2: #777
+Grey dark 3: #999
+
+*/

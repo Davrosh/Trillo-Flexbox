@@ -1,0 +1,9 @@
+////////////////////////////
+// PARAGRAPH
+
+/*
+  not last child of its container but it is the last .paragraph
+*/
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
