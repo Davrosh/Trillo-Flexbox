@@ -281,7 +281,7 @@ body {
 
 
     */
-    background-image: url("../../img/chevron-thin-right.svg");
+    background-image: url("../img/chevron-thin-right.svg");
     background-size: cover;
     /*
       Newer browsers - masks
@@ -289,13 +289,13 @@ body {
     @supports (-webkit-mask-image: url()) or (mask-image: url()) {
       .list__item::before {
         background-color: var(--color-primary);
-        -webkit-mask-image: url("../../img/chevron-thin-right.svg");
+        -webkit-mask-image: url("../img/chevron-thin-right.svg");
         /*
         protects the image from being cropped and instead resizes it to make it
         cover 
       */
         -webkit-mask-size: cover;
-        mask-image: url("../../img/chevron-thin-right.svg");
+        mask-image: url("../img/chevron-thin-right.svg");
         mask-size: cover;
         /*
         remove the colorless background-image from above our mask-image
